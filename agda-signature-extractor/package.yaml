@@ -18,9 +18,19 @@ extra-source-files:
 # common to point users to the README.md file.
 description:         Please see the README on GitHub at <https://github.com/githubuser/agda-signature-extractor#readme>
 
+language: GHC2021
+
 dependencies:
 - base >= 4.7 && < 5
 - Agda
+- directory
+- mtl
+- filepath
+- filemanip
+- containers
+- unordered-containers
+- optparse-applicative
+- pretty
 
 ghc-options:
 - -Wall
@@ -33,16 +43,7 @@ ghc-options:
 - -Wpartial-fields
 - -Wredundant-constraints
 
-library:
-  source-dirs: src
-
 executables:
-  agda-signature-extractor-exe:
+  agda-signature-extractor:
     main:                Main.hs
     source-dirs:         app
-    ghc-options:
-    - -threaded
-    - -rtsopts
-    - -with-rtsopts=-N
-    dependencies:
-    - agda-signature-extractor
