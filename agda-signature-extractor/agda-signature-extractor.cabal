@@ -29,17 +29,23 @@ executable agda-signature-extractor
       Paths_agda_signature_extractor
   hs-source-dirs:
       app
+  default-extensions:
+      BlockArguments
+      DuplicateRecordFields
+      LambdaCase
+      OverloadedRecordDot
+      OverloadedStrings
+      NoFieldSelectors
+      RecordWildCards
   ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints
   build-depends:
       Agda
+    , aeson
     , base >=4.7 && <5
-    , containers
+    , bytestring
     , directory
     , filemanip
     , filepath
     , mtl
     , optparse-applicative
-    , pretty
-    , unordered-containers
-    , witherable
   default-language: GHC2021
