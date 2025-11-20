@@ -1,4 +1,5 @@
 {-# LANGUAGE BlockArguments #-}
+{-# LANGUAGE LambdaCase #-}
 {-# LANGUAGE OverloadedRecordDot #-}
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE NoFieldSelectors #-}
@@ -17,6 +18,7 @@ import Agda.Syntax.Translation.InternalToAbstract
 import Agda.TypeChecking.Pretty (prettyTCM)
 import Agda.Utils.FileName
 import Agda.Utils.Impossible
+import Agda.Utils.Maybe (isJust)
 import Control.Monad
 import Control.Monad.Except
 import Control.Monad.IO.Class
@@ -28,6 +30,7 @@ import System.Directory
 import System.FilePath
 import System.FilePath.Find qualified as Find
 import System.IO
+import Witherable
 
 newtype ExtractorOptions = ExtractorOptions
   { outDirectory :: FilePath
@@ -77,8 +80,7 @@ main = do
 
     let agdaOptions =
           defaultOptions
-            { optOnlyScopeChecking = True,
-              optTraceImports = 0,
+            { optTraceImports = 0,
               optPragmaOptions =
                 defaultPragmaOptions
                   { _optWarningMode = defaultWarningMode {_warningSet = noWarnings}
@@ -93,9 +95,17 @@ main = do
       let interface = crInterface typeCheckResult
           currentModuleName = iModuleName interface
           definitions = _sigDefinitions $ iSignature interface
-      signatures <- forM definitions \definition -> do
-        type_ <- reify $ defType definition
-        prettyTCM type_
+
+          isGeneratedDefinition = \case
+            FunctionDefn def -> isJust (_funIsKanOp def) || isJust (_funWith def) || isJust (_funExtLam def)
+            _ -> False
+
+      signatures <- forMaybe definitions \definition -> do
+        if isGeneratedDefinition (theDef definition)
+          then pure Nothing
+          else do
+            type_ <- reify $ defType definition
+            Just <$> prettyTCM type_
 
       let signatureFileDirectory =
             outDirectory </> foldr ((</>) . show . pretty) "" (init $ mnameToList currentModuleName)

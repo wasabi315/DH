@@ -41,4 +41,5 @@ executable agda-signature-extractor
     , optparse-applicative
     , pretty
     , unordered-containers
+    , witherable
   default-language: GHC2021
