@@ -6,8 +6,8 @@ This project was created as an assignment for the course "Collaboration across S
 
 ## Features
 
-- **Vector Search**: Stores Agda standard library signatures in a vector database and enables semantic similarity-based search
-- **Interactive Interface**: Interactively search the Agda library from the command line
+- **Vector Search**: Stores the Agda standard library signatures in a vector database and enables semantic similarity-based search
+- **Interactive Interface**: Interactively search the Agda standard library from the command line
 - **RAG Agent**: Uses a LangChain-based RAG agent to search for relevant definitions from natural language queries
 
 ## Setup
@@ -65,7 +65,8 @@ Type `exit` to quit.
 - **LangChain**: RAG agent construction
 - **Chroma**: Vector database
 - **OpenAI**: Embedding model (text-embedding-3-small) and LLM (gpt-4o-mini)
-- **Python**: Implementation language
+- **Python**: Implementation language (RAG Agent)
+- **Haskell**: Implementation language (Pre-processing)
 
 ## How It Works
 
