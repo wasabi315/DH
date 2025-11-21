@@ -1,61 +1,67 @@
 import cmd
+from pathlib import Path
+from itertools import islice
+
+from dotenv import load_dotenv
 
 from langchain_core.messages import AIMessage
 from langchain_openai import OpenAIEmbeddings, ChatOpenAI
-from langchain_core.vectorstores import InMemoryVectorStore
-from langchain_community.document_loaders.generic import GenericLoader
-from langchain_community.document_loaders.parsers.txt import TextParser
-from langchain_text_splitters import RecursiveCharacterTextSplitter, Language
+from langchain_community.document_loaders import JSONLoader
 from langchain.tools import tool
 from langchain.agents import create_agent
+from langchain_chroma import Chroma
+
+################################################################################
+
+load_dotenv()
 
 model = ChatOpenAI(model="gpt-4o-mini")
 embeddings = OpenAIEmbeddings(model="text-embedding-3-small")
-vector_store = InMemoryVectorStore(embeddings)
-
-################################################################################
-# Load the agda standard library
-
-print("Loading the agda standard library...")
-
-loader = GenericLoader.from_filesystem(
-    "./agda-stdlib/src",
-    glob="**/*",
-    suffixes=[".agda"],
-    parser=TextParser()
+vector_store = Chroma(
+    collection_name="agda-signatures",
+    embedding_function=embeddings,
+    persist_directory="./chroma_db"
 )
 
-print("Loaded the agda standard library.")
-
 ################################################################################
-# Split the loaded source code into chunks
+# Load the agda standard library and store the document chunks in the vector store if not already present
 
-print("Splitting the loaded source code into chunks...")
+def batched(iterable, n):
+    """Yield lists of size <= n from iterable."""
+    it = iter(iterable)
+    while True:
+        chunk = list(islice(it, n))
+        if not chunk:
+            break
+        yield chunk
 
-# Load all documents first (lazy_load() returns an iterator, so we need to materialize it)
-print("Loading documents from filesystem...")
+if Path("./chroma_db").is_dir():
 
-agda_splitter = RecursiveCharacterTextSplitter.from_language(
-    # Agda's syntax is similar to Haskell's, so we use Haskell's language.
-    Language.HASKELL,
-    chunk_size=1200,
-    chunk_overlap=200,
-)
+    print("Loading signatures...")
 
-agda_chunks = agda_splitter.split_documents(loader.lazy_load())
+    documents = []
+    for path in Path("./signatures").glob("**/*.jsonl"):
+        loader = JSONLoader(
+            file_path=path,
+            jq_schema=".",
+            content_key="page_content",
+            json_lines=True,
+        )
+        documents.extend(loader.load())
 
-print(f"Split the loaded source code into {len(agda_chunks)} chunks.")
+    print(f"Loaded {len(documents)} signatures")
 
-################################################################################
-# Store the document chunks
+    print("Storing the documents...")
 
-print("Storing the document chunks...")
+    document_ids = []
+    BATCH_SIZE = 500
 
-# Store all chunks, not just the first 10
-# For large datasets, you might want to batch this
-document_ids = vector_store.add_documents(documents=agda_chunks)
+    for i, batch in enumerate(batched(documents, BATCH_SIZE), start=1):
+        ids = vector_store.add_documents(documents=batch)
+        document_ids.extend(ids)
+        print(f"Batch {i}: stored {len(ids)} documents (total {len(document_ids)})")
 
-print(f"Stored {len(document_ids)} document chunks.")
+    print(f"Stored {len(document_ids)} documents in total")
 
 ################################################################################
 # RAG Agent
@@ -68,7 +74,7 @@ def retrieve_context(query: str) -> str:
         query: The search query about Agda standard library items (e.g., "List map", "Maybe type", etc.)
 
     Returns:
-        A formatted string containing relevant source code snippets with their metadata.
+        A formatted string containing information about relevant definitions in the loaded Agda library.
     """
     # Increase k to get more relevant results
     retrieved_docs = vector_store.similarity_search(query, k=5)
@@ -80,19 +86,15 @@ def retrieve_context(query: str) -> str:
 
 tools = [retrieve_context]
 prompt = (
-    "You are a helpful assistant that searches the Agda standard library source code. "
+    "You are a helpful assistant that searches the Agda standard library source code."
     "When a user asks about an item (like 'List map'), use the retrieve_context tool to find relevant definitions."
-    "Some may query with natural language, while others may query with the type signature of the item."
-    "If the query is a type signature, you should try to find the item that matches the type signature."
-    "If the query is a natural language query, you should try to find the item that matches the natural language query."
+    "You have access via the retrieve_context tool to a vector store containing information about the Agda library to search for relevant definitions."
     "There may be multiple relevant definitions for the same query, so provide all relevant definitions."
-    "Analyze the retrieved source code and provide the following information:\n"
+    "Only return the following information, no other text:\n"
     "1. The module name where the item is defined\n"
     "2. The name of the item\n"
     "3. The type signature or definition of the item\n"
-    "4. Any relevant context from the source code\n\n"
-    "Be precise and cite the source file."
-    "Only return the information, no other text."
+    "Be precise. Never make up information."
 )
 agent = create_agent(model, tools, system_prompt=prompt)
 
@@ -115,5 +117,4 @@ class LibrarySearchAgent(cmd.Cmd):
             if isinstance(chunk, AIMessage):
                 print(chunk.content)
 
-if __name__ == "__main__":
-    LibrarySearchAgent().cmdloop()
+LibrarySearchAgent().cmdloop()
