@@ -36,7 +36,7 @@ uv sync
 
 Create a `.env` file and add the following:
 
-```
+```text
 OPENAI_API_KEY=your_api_key_here
 ```
 
