@@ -1,0 +1,1 @@
+{"page_content":"≤″-erase : {m n : ℕ.ℕ} → m Data.Nat.Base.≤″ n → m Data.Nat.Base.≤″ n","metadata":{"name":"≤″-erase","top_level_module_name":"Data.Nat.WithK","module_name":"Data.Nat.WithK","qualified_name":"Data.Nat.WithK.≤″-erase","kind":"function","signature":"{m n : ℕ.ℕ} → m Data.Nat.Base.≤″ n → m Data.Nat.Base.≤″ n"}}

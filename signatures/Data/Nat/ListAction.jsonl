@@ -1,0 +1,2 @@
+{"page_content":"sum : Agda.Builtin.List.List ℕ.ℕ → ℕ.ℕ","metadata":{"name":"sum","top_level_module_name":"Data.Nat.ListAction","module_name":"Data.Nat.ListAction","qualified_name":"Data.Nat.ListAction.sum","kind":"function","signature":"Agda.Builtin.List.List ℕ.ℕ → ℕ.ℕ"}}
+{"page_content":"product : Agda.Builtin.List.List ℕ.ℕ → ℕ.ℕ","metadata":{"name":"product","top_level_module_name":"Data.Nat.ListAction","module_name":"Data.Nat.ListAction","qualified_name":"Data.Nat.ListAction.product","kind":"function","signature":"Agda.Builtin.List.List ℕ.ℕ → ℕ.ℕ"}}

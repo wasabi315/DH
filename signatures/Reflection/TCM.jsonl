@@ -1,0 +1,1 @@
+{"page_content":"newMeta : Agda.Builtin.Reflection.Type → Agda.Builtin.Reflection.TC Agda.Builtin.Reflection.Term","metadata":{"name":"newMeta","top_level_module_name":"Reflection.TCM","module_name":"Reflection.TCM","qualified_name":"Reflection.TCM.newMeta","kind":"function","signature":"Agda.Builtin.Reflection.Type → Agda.Builtin.Reflection.TC Agda.Builtin.Reflection.Term"}}

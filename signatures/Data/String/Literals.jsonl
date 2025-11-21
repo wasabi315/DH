@@ -1,0 +1,1 @@
+{"page_content":"isString : Agda.Builtin.FromString.IsString Agda.Builtin.String.String","metadata":{"name":"isString","top_level_module_name":"Data.String.Literals","module_name":"Data.String.Literals","qualified_name":"Data.String.Literals.isString","kind":"function","signature":"Agda.Builtin.FromString.IsString Agda.Builtin.String.String"}}

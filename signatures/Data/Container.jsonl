@@ -1,0 +1,1 @@
+{"page_content":"μ : {s p : Agda.Primitive.Level} → Data.Container.Core.Container s p → Set (s Agda.Primitive.⊔ p)","metadata":{"name":"μ","top_level_module_name":"Data.Container","module_name":"Data.Container","qualified_name":"Data.Container.μ","kind":"function","signature":"{s p : Agda.Primitive.Level} → Data.Container.Core.Container s p → Set (s Agda.Primitive.⊔ p)"}}

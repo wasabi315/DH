@@ -1,0 +1,3 @@
+snapshot: lts-22.43
+extra-deps:
+  - Agda-2.7.0

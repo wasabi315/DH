@@ -1,0 +1,1 @@
+{"page_content":"SizedSet : (ℓ : Agda.Primitive.Level) → Set (Agda.Primitive.lsuc ℓ)","metadata":{"name":"SizedSet","top_level_module_name":"Size","module_name":"Size","qualified_name":"Size.SizedSet","kind":"function","signature":"(ℓ : Agda.Primitive.Level) → Set (Agda.Primitive.lsuc ℓ)"}}

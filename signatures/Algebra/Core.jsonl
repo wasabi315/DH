@@ -1,0 +1,2 @@
+{"page_content":"Op₁ : {ℓ : Agda.Primitive.Level} → Set ℓ → Set ℓ","metadata":{"name":"Op₁","top_level_module_name":"Algebra.Core","module_name":"Algebra.Core","qualified_name":"Algebra.Core.Op₁","kind":"function","signature":"{ℓ : Agda.Primitive.Level} → Set ℓ → Set ℓ"}}
+{"page_content":"Op₂ : {ℓ : Agda.Primitive.Level} → Set ℓ → Set ℓ","metadata":{"name":"Op₂","top_level_module_name":"Algebra.Core","module_name":"Algebra.Core","qualified_name":"Algebra.Core.Op₂","kind":"function","signature":"{ℓ : Agda.Primitive.Level} → Set ℓ → Set ℓ"}}

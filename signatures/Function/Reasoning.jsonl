@@ -1,0 +1,1 @@
+{"page_content":"∋-syntax : {a : Agda.Primitive.Level} (A₁ : Set a) → A₁ → A₁","metadata":{"name":"∋-syntax","top_level_module_name":"Function.Reasoning","module_name":"Function.Reasoning","qualified_name":"Function.Reasoning.∋-syntax","kind":"function","signature":"{a : Agda.Primitive.Level} (A₁ : Set a) → A₁ → A₁"}}

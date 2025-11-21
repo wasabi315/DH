@@ -1,0 +1,1 @@
+{"page_content":"ExcludedMiddle : (ℓ : Agda.Primitive.Level) → Set (Agda.Primitive.lsuc ℓ)","metadata":{"name":"ExcludedMiddle","top_level_module_name":"Axiom.ExcludedMiddle","module_name":"Axiom.ExcludedMiddle","qualified_name":"Axiom.ExcludedMiddle.ExcludedMiddle","kind":"function","signature":"(ℓ : Agda.Primitive.Level) → Set (Agda.Primitive.lsuc ℓ)"}}
