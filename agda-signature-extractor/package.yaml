@@ -41,7 +41,6 @@ default-extensions:
 - RecordWildCards
 
 ghc-options:
-- -O2
 - -Wall
 - -Wcompat
 - -Widentities
