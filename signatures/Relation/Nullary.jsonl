@@ -1,0 +1,1 @@
+{"page_content":"WeaklyDecidable : {p : Agda.Primitive.Level} → Set p → Set p","metadata":{"name":"WeaklyDecidable","top_level_module_name":"Relation.Nullary","module_name":"Relation.Nullary","qualified_name":"Relation.Nullary.WeaklyDecidable","kind":"function","signature":"{p : Agda.Primitive.Level} → Set p → Set p"}}

@@ -1,0 +1,1 @@
+{"page_content":"number : (n : ℕ.ℕ) → Agda.Builtin.FromNat.Number (Data.Fin.Base.Fin n)","metadata":{"name":"number","top_level_module_name":"Data.Fin.Literals","module_name":"Data.Fin.Literals","qualified_name":"Data.Fin.Literals.number","kind":"function","signature":"(n : ℕ.ℕ) → Agda.Builtin.FromNat.Number (Data.Fin.Base.Fin n)"}}
