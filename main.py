@@ -35,7 +35,7 @@ def batched(iterable, n):
             break
         yield chunk
 
-if Path("./chroma_db").is_dir():
+if not Path("./chroma_db").exists():
 
     print("Loading signatures...")
 
